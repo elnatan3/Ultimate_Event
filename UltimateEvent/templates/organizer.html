@@ -1,0 +1,18 @@
+<!-- organizer_profile.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Organizer</h1>
+    <div class="nav-buttons">
+        <a href="{{ url_for('organizer_profile') }}" class="nav-button active">Profile</a>
+        <a href="{{ url_for('create_event') }}" class="nav-button">Create Event</a>
+        <a href="{{ url_for('upcoming_events_organizer') }}" class="nav-button">Upcoming Events</a>
+        <a href="{{ url_for('previous_events_organizer') }}"class="nav-button">Previous Events</a>
+    </div>
+
+    <div class="profile">
+        <h2>{{ organizer['Name'] }}</h2>
+        <p>{{ organizer['Description'] }}</p>
+        <p>Email: {{ organizer['Email'] }}</p>
+    </div>
+{% endblock %}
