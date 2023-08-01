@@ -182,13 +182,18 @@ def organizer_logout():
 # Event routes
 @app.route('/events', methods=['GET'])
 def events():
-  if 'user_id' not in session:
-    return redirect(url_for('existing_user'))
+    if 'user_id' not in session:
+        return redirect(url_for('existing_user'))
 
-  conn = get_db_connection()
-  events = conn.execute('SELECT * FROM Events').fetchall()
-  conn.close()
-  return render_template('events.html', events=events)
+    conn = get_db_connection()
+
+    # Get the current date and time
+    current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    # Fetch events that are past today's date and time
+    events = conn.execute('SELECT * FROM Events WHERE EventDateTime >= ?', (current_datetime,)).fetchall()
+    conn.close()
+    return render_template('events.html', events=events)
 
 
 @app.route('/upcoming_events')
